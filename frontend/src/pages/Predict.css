@@ -31,7 +31,7 @@ h1 {
 }
 
 .input {
-  width: 80%;
+  width: 90%;
   padding: 0.5rem 0.625rem;
   margin-bottom: 3%;
   border: solid #2c3e70;
@@ -50,7 +50,6 @@ h1 {
 
 .button {
   display: block;
-  margin: 0 auto 40px auto;
   padding: 0.7%;
   font-size: 16px;
   font-weight: 700;
