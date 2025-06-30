@@ -12,14 +12,15 @@ jobs:
     defaults:
       run:
         working-directory: frontend
-
+  
     strategy:
       matrix:
         node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v4
-
+      - name: Afficher le répertoire de travail courant
+        run: pwd
       - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
