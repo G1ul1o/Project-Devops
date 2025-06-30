@@ -1,6 +1,6 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #0b1a2b; 
+  background-color: #010A13; 
   color: #f0d365; 
   margin: 0;
   padding: 0;
@@ -9,17 +9,16 @@ body {
 h1 {
   text-align: center;
   margin: 2rem 0;
-  color: #f0d365;
+  color: #C89B3C;
 }
 
 .form {
   max-width: 90vw;
-  width: 350px;
+  width: 280px;
   margin: 0 auto 2rem;
   padding: 1.25rem;
   background-color: #1c2a44;
   border-radius: 0.5rem;
-  box-shadow: 0 0 0.625rem rgba(240, 211, 101, 0.5);
   display: flex;
   flex-direction: column;
 }
@@ -32,15 +31,12 @@ h1 {
 }
 
 .input {
-  width: 75%;
+  width: 80%;
   padding: 0.5rem 0.625rem;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-  border: 0.125rem solid #2c3e70;
-  border-radius: 0.3125rem;
+  margin-bottom: 3%;
+  border: solid #2c3e70;
   background-color: #14243d;
   color: #f0d365;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .input::placeholder {
@@ -48,16 +44,14 @@ h1 {
 }
 
 .input:focus {
-  outline: none;
   border-color: #f0d365;
   background-color: #1f365f;
-  box-shadow: 0 0 0.3125rem #f0d365;
 }
 
 .button {
   display: block;
   margin: 0 auto 40px auto;
-  padding: 12px 25px;
+  padding: 0.7%;
   font-size: 16px;
   font-weight: 700;
   color: #0b1a2b;
@@ -65,11 +59,52 @@ h1 {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(240, 211, 101, 0.6);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .button:hover {
+  background-color: #4b3a01;
+} 
+
+.paraph {
+  text-align: center;
+  margin: 1rem auto;
+  color: #f0d365;
+  font-weight: 700;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup {
+  background-color: #1c2a44;
+  padding: 2rem;
+  border-radius: 10px;
+  color: #f0d365;
+  max-width: 90%;
+  width: 400px;
+  text-align: center;
+}
+
+.close-button {
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #f0d365;
+  color: #0b1a2b;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-button:hover {
   background-color: #e6c34f;
-  box-shadow: 0 6px 12px rgba(230, 195, 79, 0.9);
 }
