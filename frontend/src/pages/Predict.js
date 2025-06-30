@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./Predict.css";
 import Header from "../component/header.js";
 
-export default function PredictValues() {
+export default function Predict() {
   const [showPopup, setShowPopup] = useState(false);
 
   const handlePredictClick = (e) => {
