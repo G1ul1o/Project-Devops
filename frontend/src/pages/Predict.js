@@ -6,7 +6,7 @@ export default function ChampionSelect() {
   const [showPopup, setShowPopup] = useState(false);
 
   const handlePredictClick = (e) => {
-    e.preventDefault(); // Empêche le rechargement
+    e.preventDefault();
     setShowPopup(true);
   };
 

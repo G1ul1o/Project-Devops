@@ -17,7 +17,7 @@ export default function Home() {
         </section>
 
         <section className="roles-section">
-          <h2 className="section-title">Main Roles in League</h2>
+          <h2 className="section-title">Main Roles in League of Legends</h2>
           <ul className="roles-list">
             <li><strong>Top Lane:</strong> Durable fighters or tanks who dominate the upper lane.</li>
             <li><strong>Jungle:</strong> Roam between lanes, clear jungle camps, and support teammates with ambushes.</li>
