@@ -1,0 +1,26 @@
+name: Sync staging to production
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  push-to-production:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Push staging to production
+        run: |
+          git checkout production
+          git merge staging --no-ff -m "Auto-merge from staging to production" 
+          git push origin production
