@@ -1,4 +1,4 @@
-name: Sync dev to staging
+name: Sync staging to production
 
 on:
   push:
