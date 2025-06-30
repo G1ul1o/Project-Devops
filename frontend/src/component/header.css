@@ -1,0 +1,34 @@
+.header {
+  background-color: #010A13;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+  border-bottom: 2px solid #C69938;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #C89B3C;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  letter-spacing: 1px;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: #F0E6D2;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+  font-family: 'Verdana', sans-serif;
+}
+
+.nav-link:hover {
+  color: #058F9C;
+}
