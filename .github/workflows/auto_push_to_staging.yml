@@ -27,3 +27,4 @@ jobs:
             git checkout staging
             git merge dev --no-ff -m "Auto-merge from dev to staging"
             git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} staging
+
