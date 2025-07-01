@@ -33,7 +33,7 @@ jobs:
               experiment_name = 'RandomForestExperiment_2'  # ou le nom de ton expérience
               experiment = client.get_experiment_by_name(experiment_name)
               if experiment is None:
-                  raise Exception(f'Experiment {experiment_name} not found')
+                  raise Exception(f"Experiment {experiment_name} not found")
               runs = client.search_runs(experiment_ids=[experiment.experiment_id], order_by=['attributes.start_time DESC'], max_results=1)
               if not runs:
                   raise Exception('No runs found')
