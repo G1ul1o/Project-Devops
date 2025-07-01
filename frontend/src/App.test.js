@@ -1,6 +1,7 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import Predict from "./pages/Predict";
+import {render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import Predict from "./pages/Predict";
+import App from "./App";
 
 describe("Predict component", () => {
   test("renders form inputs and button", () => { //vérifie que le composant Predict se charge correctement les inputs et le bouton
@@ -59,4 +60,38 @@ describe("Predict component", () => {
     expect(screen.queryByText(/This is where the prediction result will appear!/i)).not.toBeInTheDocument();
   });
 
+});
+
+describe("Integration: App routing", () => {
+  test("Rend la page Home sur la route /", () => {
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText(/Welcome to our Project to improve your comprehension of League of Legends/i)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Welcome to our Project to improve your comprehension of League of Legends");
+  });
+
+  test("Rend la page Predict sur la route /Predict", () => {
+    render(
+      <MemoryRouter initialEntries={["/Predict"]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText(/Welcome to the Predict Page/i)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Welcome to the Predict Page");
+  });
+
+  test("Rend le composant Header sur toutes les pages", () => {
+    render(
+      <MemoryRouter initialEntries={["/Predict"]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByRole("banner")).toBeInTheDocument();
+  });
 });
