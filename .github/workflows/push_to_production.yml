@@ -1,12 +1,9 @@
 name: Push_to_production
 
 on:
-
   push:
-    branches: [ "production" ]
-
-
-  workflow_dispatch:
+    branches:  
+      - production
 
 jobs:
   build:
