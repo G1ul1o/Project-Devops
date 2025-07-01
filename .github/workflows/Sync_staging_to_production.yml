@@ -2,8 +2,7 @@ name: Sync staging to production
 
 on:
   push:
-    branches:
-      - staging
+    branches: [staging]
 
 jobs:
   push-to-production:
