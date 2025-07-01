@@ -21,7 +21,9 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Push dev to staging
+        env:
+          TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
         run: |
           git checkout staging
-          git merge dev --no-ff -m "Auto-merge from dev to staging" #to 
-          git push origin staging
+          git merge dev --no-ff -m "Auto-merge from dev to staging"
+          git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} staging
