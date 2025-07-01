@@ -23,4 +23,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-/050625_LoL_champion_data.csv
+050625_LoL_champion_data.csv
+XGBClassifier.pkl
+correlation_matrix_with_herotype.png
+050625_LoL_champion_data.csv.dvc
