@@ -43,5 +43,5 @@ jobs:
             TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
         run: |
             git checkout production
-            git merge staging  --no-ff -m "Auto-merge from dev to staging"
+            git merge staging  --no-ff -m "Auto-merge from staging to production"
             git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} production
