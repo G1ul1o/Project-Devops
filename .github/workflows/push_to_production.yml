@@ -24,7 +24,7 @@ jobs:
           MLFLOW_TRACKING_URI: https://dagshub.com/G1ul1o/Exercice_DVC.mlflow
  
         run: |
-              python -c "
+              python -c '
               import mlflow
               client = mlflow.tracking.MlflowClient(tracking_uri='$MLFLOW_TRACKING_URI')
               experiment_name = 'Default'  # ou le nom de ton expérience
@@ -39,6 +39,7 @@ jobs:
               import os
               os.system(f'mkdir -p models/rf_model')
               os.system(f'mlflow artifacts download --run-id {run_id} --artifact-path model/rf_model.pkl -o models/rf_model')
+              '
 
 
       - name: Set up Docker Buildx
