@@ -1,0 +1,46 @@
+.home-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  color: #f0d365;
+  background-color: #0b1a2b;
+}
+
+.home-title {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  color: #f0d365;
+}
+
+.home-section,
+.roles-section {
+  background-color: #1c2a44;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0.5rem rgba(240, 211, 101, 0.3);
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: #f0d365;
+}
+
+.home-description {
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.roles-list {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+.roles-list li {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.4;
+}
