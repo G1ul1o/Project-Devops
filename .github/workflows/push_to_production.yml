@@ -30,7 +30,7 @@ jobs:
 
               tracking_uri = os.environ["MLFLOW_TRACKING_URI"]
               client = mlflow.tracking.MlflowClient(tracking_uri=tracking_uri)
-              experiment_name = 'RandomForestExperiment_2'  # ou le nom de ton expérience
+              experiment_name = "RandomForestExperiment_2"  # ou le nom de ton expérience
               experiment = client.get_experiment_by_name(experiment_name)
               if experiment is None:
                   raise Exception(f"Experiment {experiment_name} not found")
