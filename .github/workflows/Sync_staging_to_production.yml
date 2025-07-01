@@ -39,8 +39,9 @@ jobs:
           npm run test
           npm run build
       - name: Push staging to production
-      
+        env:
+            TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
         run: |
-          git checkout production
-          git merge staging --no-ff -m "Auto-merge from staging to production" 
-          git push origin production
+            git checkout production
+            git merge staging  --no-ff -m "Auto-merge from dev to staging"
+            git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} production
