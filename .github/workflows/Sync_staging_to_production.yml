@@ -1,6 +1,7 @@
 name: Sync staging to production
 
 on:
+  workflow_dispatch:
   push:
     branches: [staging]
 
