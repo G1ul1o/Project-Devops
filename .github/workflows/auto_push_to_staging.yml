@@ -23,6 +23,13 @@ jobs:
       - name: Setup GitHub CLI
         run: |
           sudo apt install gh -y
+      
+      - name: Authenticate GitHub CLI (with personal token)
+        env:
+          GH_TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
+        run: |
+          gh auth login
+          gh auth setup-git
 
       - name: Push dev to staging
         run: |
