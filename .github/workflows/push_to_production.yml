@@ -1,6 +1,7 @@
 name: Push_to_production
 
 on:
+  workflow_dispatch:
   push:
     branches:  
       - production
