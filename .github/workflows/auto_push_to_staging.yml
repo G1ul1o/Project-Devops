@@ -32,7 +32,6 @@ jobs:
           git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} staging
 
       - name: Trigger sync-staging-to-production workflow
-        env:
-          GH_TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
         run: |
+          echo "GH_TOKEN=${{ secrets.ACTIONS_DEPLOY_TOKEN }}" >> $GITHUB_ENV
           gh workflow run Sync_staging_to_production.yml --ref staging
