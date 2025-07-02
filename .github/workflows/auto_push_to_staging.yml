@@ -28,3 +28,4 @@ jobs:
             git checkout staging
             git merge dev --no-edit
             git push origin staging
+
