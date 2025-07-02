@@ -30,9 +30,8 @@ jobs:
           git merge dev --no-ff -m "Auto-merge from dev to staging"
           git push https://x-access-token:${{ secrets.ACTIONS_DEPLOY_TOKEN }}@github.com/${{ github.repository }} staging
 
-      - name: Trigger sync-staging-to-production workflow (optional)
+      - name: Trigger sync-staging-to-production workflow
         env:
           GH_TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
-        run: |
-          gh workflow run sync-staging-to-production.yml --ref staging
+        run: gh workflow run sync-staging-to-production.yml --ref staging
 
