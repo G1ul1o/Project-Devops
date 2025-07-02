@@ -21,24 +21,18 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Setup GitHub CLI
-        run: |
-          sudo apt install gh -y
-      
-      - name: Authenticate GitHub CLI (with personal token)
-        env:
-          GH_TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
-        run: |
-          gh auth login
-          gh auth setup-git
+        run: sudo apt install gh -y
 
       - name: Push dev to staging
+        env:
+          TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
         run: |
           git checkout staging
           git merge dev --no-ff -m "Auto-merge from dev to staging"
-          git push https://x-access-token:${{ secrets.ACTIONS_DEPLOY_TOKEN }}@github.com/${{ github.repository }} staging
+          git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} staging
 
       - name: Trigger sync-staging-to-production workflow
         env:
           GH_TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
-        run: gh workflow run Sync_staging_to_production.yml --ref staging
-
+        run: |
+          gh workflow run Sync_staging_to_production.yml --ref staging
