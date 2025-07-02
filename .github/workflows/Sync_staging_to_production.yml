@@ -44,5 +44,12 @@ jobs:
             TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
         run: |
             git checkout production
-            git merge staging  --no-ff -m "Auto-merge from staging to production"
-            git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} production
+            git merge staging --no-ff -m "Auto-merge from staging to production" 
+            git push origin production
+
+      - name: Trigger sync-staging-to-production workflow
+        env:
+          GH_TOKEN: ${{ secrets.TOKEN_ACTIONS }}
+        run: |
+
+          gh workflow run push_to_production.yml --ref production
