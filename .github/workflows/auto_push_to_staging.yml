@@ -15,17 +15,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Configure Git
+      - name: Setup GitHub CLI
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          sudo apt install gh -y
+
+      - name: Authenticate GH CLI
+        env:
+          GH_TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
+        run: |
+          gh auth login --with-token <<< "$GH_TOKEN"
 
       - name: Push dev to staging
-        env:
-            TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
         run: |
-            git fetch origin
-            git checkout staging
-            git merge dev --no-edit
-            git push origin staging
+          git checkout staging
+          git merge dev --no-ff -m "Auto-merge from dev to staging"
+          git push https://x-access-token:${{ secrets.ACTIONS_DEPLOY_TOKEN }}@github.com/${{ github.repository }} staging
 
