@@ -40,5 +40,5 @@ jobs:
       - name: Trigger sync-staging-to-production workflow
         env:
           GH_TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
-        run: gh workflow run sync-staging-to-production.yml --ref staging
+        run: gh workflow run Sync_staging_to_production.yml --ref staging
 
