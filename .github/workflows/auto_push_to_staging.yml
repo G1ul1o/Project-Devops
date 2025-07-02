@@ -24,6 +24,7 @@ jobs:
         env:
             TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
         run: |
+            git fetch origin
             git checkout staging
-            git merge dev --no-ff -m "Auto-merge from dev to staging"
-            git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} staging
+            git merge dev --no-edit
+            git push origin staging
