@@ -28,6 +28,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
         run: |
+          gh auth login
           gh auth setup-git
 
       - name: Push dev to staging
