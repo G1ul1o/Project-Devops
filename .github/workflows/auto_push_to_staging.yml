@@ -24,12 +24,10 @@ jobs:
         run: sudo apt install gh -y
 
       - name: Push dev to staging
-        env:
-          TOKEN: ${{ secrets.TOKEN_ACTIONS }}
         run: |
           git checkout staging
           git merge dev --no-ff -m "Auto-merge from dev to staging"
-          git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} staging
+          git push origin staging
 
       - name: Trigger sync-staging-to-production workflow
         env:
