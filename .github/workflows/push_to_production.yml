@@ -69,7 +69,7 @@ jobs:
 
       - name: Build backend image
         run: |
-          docker build -t $IMAGE_NAME:backend ./backend
+          docker build -t $IMAGE_NAME:backend ./backend/Dockerfile .
 
       - name: Push images to Docker Hub
         run: |
