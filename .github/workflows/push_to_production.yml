@@ -65,12 +65,13 @@ jobs:
       
       - name: Build frontend image
         run: |
-          docker build -t $IMAGE_NAME:frontend ./frontend
+          docker build -t $IMAGE_NAME:project_app_frontend ./frontend
 
       - name: Build backend image
         run: |
-          docker build -t $IMAGE_NAME:backend -f ./backend/Dockerfile .
+          docker build -t $IMAGE_NAME:project_app_backend -f ./backend/Dockerfile .
 
       - name: Push images to Docker Hub
         run: |
-          docker push $IMAGE_NAME:application_project
+          docker push $IMAGE_NAME:project_app_frontend
+          docker push $IMAGE_NAME:project_app_backend
