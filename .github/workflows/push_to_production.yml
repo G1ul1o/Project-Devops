@@ -43,11 +43,17 @@ jobs:
               os.makedirs("model", exist_ok=True)
               os.system(f"mlflow artifacts download --run-id {run_id} --artifact-path model/XGBClassifier.pkl --dst-path model")
 
-              import shutil
-              shutil.move("model/model/XGBClassifier.pkl", "model/XGBClassifier.pkl")
-              '
 
+      - name: Move model file to clean path
+        run: |
+            mv model/model/XGBClassifier.pkl model/XGBClassifier.pkl
 
+      - name: Verify model file exists
+        run: |
+          echo "Listing contents of model directory:"
+          ls -l model
+          test -f model/XGBClassifier.pkl && echo "✅ Model file found!" || (echo "❌ Model file NOT found!" && exit 1)
+          
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
