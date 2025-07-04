@@ -42,6 +42,9 @@ jobs:
               print(f"Latest run_id: {run_id}")
               os.makedirs("model", exist_ok=True)
               os.system(f"mlflow artifacts download --run-id {run_id} --artifact-path model/XGBClassifier.pkl --dst-path model")
+
+              import shutil
+              shutil.move("model/model/XGBClassifier.pkl", "model/XGBClassifier.pkl")
               '
 
 
