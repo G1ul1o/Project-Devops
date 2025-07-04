@@ -22,7 +22,7 @@ jobs:
 
       - name: Download model artifact from DagsHub
         env:
-          MLFLOW_TRACKING_URI: https://dagshub.com/G1ul1o/Project_Devops_Mlops.mlflow
+          MLFLOW_TRACKING_URI: https://dagshub.com/G1ul1o/Project-Devops.mlflow
  
         run: |
               python -c '
