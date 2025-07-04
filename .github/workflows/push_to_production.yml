@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-        IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/rf-mlflow-notebook
+        IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/project_devops_images
     steps:
       
       - name: Checkout repository
@@ -54,10 +54,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      - name: Build the image
+      - name: Build frontend image
         run: |
-          docker build -t $IMAGE_NAME:application_mflow .
+          docker build -t $IMAGE_NAME:frontend ./frontend
+
+      - name: Build backend image
+        run: |
+          docker build -t $IMAGE_NAME:backend ./backend
 
       - name: Push images to Docker Hub
         run: |
-          docker push $IMAGE_NAME:application_mflow
+          docker push $IMAGE_NAME:application_project
