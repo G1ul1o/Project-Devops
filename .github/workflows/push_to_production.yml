@@ -40,8 +40,8 @@ jobs:
                   raise Exception("No runs found")
               run_id = runs[0].info.run_id
               print(f"Latest run_id: {run_id}")
-              os.system(f"mkdir -p model/XGBClassifier.pkl")
-              os.system(f"mlflow artifacts download --run-id {run_id} --artifact-path model/XGBClassifier.pkl")
+              os.makedirs("model", exist_ok=True)
+              os.system(f"mlflow artifacts download --run-id {run_id} --artifact-path model/XGBClassifier.pkl --dst-path model")
               '
 
 
