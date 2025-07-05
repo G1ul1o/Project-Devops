@@ -84,11 +84,13 @@ jobs:
       - name: Wait for backend to be ready
         run: wait-on http://127.0.0.1:8000/docs
       
-      - name: Start frontend in background
+      - name: Create .env file for frontend
+        run: echo "REACT_APP_API_URL=http://localhost:8000" > frontend/.env
+
+      - name: Start frontend in background (dev mode)
         run: |
           cd frontend
-          npm install -g serve
-          nohup serve -s build -l 3000 &
+          nohup npm start &
         shell: bash
 
       - name: Wait for frontend to be ready
