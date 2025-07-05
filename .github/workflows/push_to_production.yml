@@ -84,10 +84,11 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
       
-      - name: Authenticate with GCP
+      - name: Authenticate with GCP (activate service account)
         run: |
-            gcloud auth activate-service-account --key-file="${{ secrets.GCP_SA_KEY }}" 
-            
+          echo '${{ secrets.GCP_SA_KEY }}' > ${{ github.workspace }}/gcp-key.json
+          gcloud auth activate-service-account --key-file="${{ github.workspace }}/gcp-key.json"
+                  
       - name: Configure Docker for Google Cloud
         run: gcloud auth configure-docker --quiet
       
