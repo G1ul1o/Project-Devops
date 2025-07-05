@@ -16,6 +16,7 @@ jobs:
         GCP_REGION: ${{ secrets.GCP_REGION }}             
         FRONTEND_SERVICE: project-frontend  
         BACKEND_SERVICE: project-backend
+        IMAGE_TAG: ${{ github.sha }}
     steps:
       
       - name: Checkout repository
@@ -71,8 +72,8 @@ jobs:
       
       - name: Build Docker images
         run: |
-          docker build --no-cache -t $IMAGE_NAME:project_app_frontend ./frontend --build-arg REACT_APP_API_URL="https://$BACKEND_SERVICE-$GCP_REGION.a.run.app"
-          docker build --no-cache -t $IMAGE_NAME:project_app_backend -f ./backend/Dockerfile .
+          docker build --no-cache -t $IMAGE_NAME:front_$IMAGE_TAG ./frontend --build-arg REACT_APP_API_URL="https://$BACKEND_SERVICE-$GCP_REGION.a.run.app"
+          docker build --no-cache -t $IMAGE_NAME:back_$IMAGE_TAG -f ./backend/Dockerfile .
 
       - name: Debug Show installed python packages in backend image
         run: |
@@ -80,17 +81,7 @@ jobs:
       - name: Inspect model files inside backend container
         run: |
           echo "Listing /app directory in backend image:"
-          docker run --rm $IMAGE_NAME:project_app_backend ls -R /app
-          
-      - name: Inspect model files inside backend container
-        run: |
-          echo "Listing /app directory in backend image:"
-          docker run --rm $IMAGE_NAME:project_app_backend ls -R /app
-      
-      - name: Inspect model file server.py
-        run: |
-          echo "Listing /app directory in backend image:"
-          docker run --rm $IMAGE_NAME:project_app_backend cat /app/server.py
+          docker run --rm $IMAGE_NAME:project_app_backend ls -R /app   
           
       - name: Show server.py contents (debug)
         run: |
@@ -99,8 +90,8 @@ jobs:
     
       - name: Push Docker images to Docker Hub
         run: |
-          docker push $IMAGE_NAME:project_app_frontend
-          docker push $IMAGE_NAME:project_app_backend
+          docker push $IMAGE_NAME:front_$IMAGE_TAG
+          docker push $IMAGE_NAME:back_$IMAGE_TAG
 
       - name: Install Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
@@ -120,7 +111,7 @@ jobs:
       - name: Deploy Backend to Cloud Run
         run: |
           gcloud run deploy $BACKEND_SERVICE \
-            --image=$IMAGE_NAME:project_app_backend \
+            --image=$IMAGE_NAME:back_$IMAGE_TAG \
             --region=$GCP_REGION \
             --platform=managed \
             --allow-unauthenticated \
@@ -129,7 +120,7 @@ jobs:
       - name: Deploy Frontend to Cloud Run
         run: |
           gcloud run deploy $FRONTEND_SERVICE \
-            --image=$IMAGE_NAME:project_app_frontend \
+            --image=$IMAGE_NAME:front_$IMAGE_TAG \
             --region=$GCP_REGION \
             --platform=managed \
             --allow-unauthenticated \
