@@ -77,6 +77,10 @@ jobs:
       - name: Debug Show installed python packages in backend image
         run: |
               docker run --rm $IMAGE_NAME:project_app_backend pip list
+      - name: Inspect model files inside backend container
+        run: |
+          echo "Listing /app directory in backend image:"
+          docker run --rm $IMAGE_NAME:project_app_backend ls -R /app
     
       - name: Push Docker images to Docker Hub
         run: |
