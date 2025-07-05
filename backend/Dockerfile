@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY backend/ /app/
 COPY model/XGBClassifier.pkl /app/XGBClassifier.pkl
+COPY model/LabelEncoderHeroType.pkl /app/LabelEncoderHeroType.pkl
 
 RUN pip install --no-cache-dir -r requirements.txt
 
