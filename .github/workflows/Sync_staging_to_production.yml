@@ -10,9 +10,6 @@ jobs:
   push-to-production:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: frontend
     
     steps:
       - name: Checkout repo
@@ -35,10 +32,81 @@ jobs:
 
       - name: Install and Build App
         run: |
+          cd frontend
           npm install
           npm ci
           npm run test
           npm run build
+      
+      - name: Setup MLflow 
+        run: pip install mlflow==2.22.0
+
+      - name: Download model artifact from DagsHub
+        env:
+          MLFLOW_TRACKING_URI: https://dagshub.com/G1ul1o/Project-Devops.mlflow
+ 
+        run: |
+              python -c '
+              import mlflow
+              import os
+              tracking_uri = os.environ["MLFLOW_TRACKING_URI"]
+              client = mlflow.tracking.MlflowClient(tracking_uri=tracking_uri)
+              experiment_name = "Project_Devops_Mlops"  # ou le nom de ton expérience
+              experiment = client.get_experiment_by_name(experiment_name)
+              if experiment is None:
+                  raise Exception(f"Experiment {experiment_name} not found")
+              runs = client.search_runs(experiment_ids=[experiment.experiment_id], order_by=["attributes.start_time DESC"], max_results=1)
+              if not runs:
+                  raise Exception("No runs found")
+              run_id = runs[0].info.run_id
+              print(f"Latest run_id: {run_id}")
+              os.makedirs("model", exist_ok=True)
+              os.system(f"mlflow artifacts download --run-id {run_id} --artifact-path model/XGBClassifier.pkl --dst-path model")
+              os.system(f"mlflow artifacts download --run-id {run_id} --artifact-path model/LabelEncoderHeroType.pkl --dst-path model")
+              '
+      - name: Move model file to clean path
+        run: |
+            mv model/model/XGBClassifier.pkl backend/XGBClassifier.pkl
+            mv model/model/LabelEncoderHeroType.pkl backend/LabelEncoderHeroType.pkl
+      
+      - name: Install backend dependencies
+        run: |
+          pip install -r backend/requirements.txt
+
+      - name: Install wait-on (for Cypress)
+        run: npm install -g wait-on
+
+      - name: Start backend in background
+        run: |
+          cd backend
+          nohup uvicorn server:app --host 127.0.0.1 --port 8000 &
+
+      - name: Wait for backend to be ready
+        run: wait-on http://127.0.0.1:8000/docs
+      
+      - name: Create .env file for frontend
+        run: echo "REACT_APP_API_URL=http://localhost:8000" > frontend/.env
+
+      - name: Start frontend in background (dev mode)
+        run: |
+          cd frontend
+          nohup npm start > ../frontend.log 2>&1 &
+          sleep 10
+
+      - name: Wait for frontend to be ready
+        run: |
+          echo "⏳ Waiting for frontend to respond..."
+          for i in {1..20}; do
+            curl -sSf http://localhost:3000 && echo "✅ Frontend ready" && exit 0
+            echo "Waiting ($i)..."
+            sleep 3
+          done
+          echo "❌ Frontend did not start in time"
+          exit 1
+        
+      - name: Run Cypress E2E tests
+        run: npx cypress run
+      
       - name: Push staging to production
         env:
             TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
