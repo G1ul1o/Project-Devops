@@ -12,6 +12,10 @@ jobs:
     
     env:
         IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/project_devops_images
+        GCP_PROJECT:  ${{ secrets.GCP_PROJECT_ID }}  
+        GCP_REGION: ${{ secrets.GCP_REGION }}             
+        FRONTEND_SERVICE: project-frontend  
+        BACKEND_SERVICE: project-backend
     steps:
       
       - name: Checkout repository
@@ -63,15 +67,45 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      - name: Build frontend image
+      - name: Build Docker images
         run: |
-          docker build -t $IMAGE_NAME:project_app_frontend ./frontend
-
-      - name: Build backend image
-        run: |
+          docker build -t $IMAGE_NAME:project_app_frontend ./frontend --build-arg REACT_APP_API_URL="https://$BACKEND_SERVICE-$GCP_REGION.a.run.app"
           docker build -t $IMAGE_NAME:project_app_backend -f ./backend/Dockerfile .
 
-      - name: Push images to Docker Hub
+      - name: Push Docker images to Docker Hub
         run: |
           docker push $IMAGE_NAME:project_app_frontend
           docker push $IMAGE_NAME:project_app_backend
+
+      - name: Install Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+          
+      - name: Configure Docker for Google Cloud
+        run: gcloud auth configure-docker --quiet
+
+      - name: Deploy Backend to Cloud Run
+        run: |
+          gcloud run deploy $BACKEND_SERVICE \
+            --image=$IMAGE_NAME:project_app_backend \
+            --region=$GCP_REGION \
+            --platform=managed \
+            --allow-unauthenticated \
+            --port=8000
+
+      - name: Deploy Frontend to Cloud Run
+        run: |
+          gcloud run deploy $FRONTEND_SERVICE \
+            --image=$IMAGE_NAME:project_app_frontend \
+            --region=$GCP_REGION \
+            --platform=managed \
+            --allow-unauthenticated \
+            --port=80
+            
+      - name: Show deployed service URLs
+        run: |
+          echo "Backend URL: https://project-backend-$REGION.a.run.app"
+          echo "Frontend URL: https://project-frontend-$REGION.a.run.app"
