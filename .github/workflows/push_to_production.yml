@@ -72,7 +72,7 @@ jobs:
       
       - name: Build Docker images
         run: |
-          docker build --no-cache -t $IMAGE_NAME:front_$IMAGE_TAG ./frontend --build-arg REACT_APP_API_URL="https://$BACKEND_SERVICE-$GCP_REGION.a.run.app"
+          docker build --no-cache -t $IMAGE_NAME:front_$IMAGE_TAG ./frontend --build-arg REACT_APP_API_URL="https://${BACKEND_SERVICE}-${IMAGE_TAG}.${GCP_REGION}.run.app"
           docker build --no-cache -t $IMAGE_NAME:back_$IMAGE_TAG -f ./backend/Dockerfile .
 
       - name: Debug Show installed python packages in backend image
