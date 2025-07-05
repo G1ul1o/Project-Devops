@@ -16,8 +16,8 @@ app.add_middleware(
 )
 
 # Charger le modèle avec joblib
-model = joblib.load("../XGBClassifier.pkl")
-label_encoder = joblib.load("../LabelEncoderHeroType.pkl")
+model = joblib.load("XGBClassifier.pkl")
+label_encoder = joblib.load("LabelEncoderHeroType.pkl")
 
 range_encoder = LabelEncoder()
 range_encoder.classes_ = ['melee', 'ranged']
