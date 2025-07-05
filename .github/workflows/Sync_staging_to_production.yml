@@ -90,11 +90,19 @@ jobs:
       - name: Start frontend in background (dev mode)
         run: |
           cd frontend
-          nohup npm run build
-        shell: bash
+          nohup npm start > ../frontend.log 2>&1 &
+          sleep 10
 
       - name: Wait for frontend to be ready
-        run: wait-on http://localhost:3000
+        run: |
+          echo "⏳ Waiting for frontend to respond..."
+          for i in {1..20}; do
+            curl -sSf http://localhost:3000 && echo "✅ Frontend ready" && exit 0
+            echo "Waiting ($i)..."
+            sleep 3
+          done
+          echo "❌ Frontend did not start in time"
+          exit 1
         
       - name: Run Cypress E2E tests
         run: npx cypress run
