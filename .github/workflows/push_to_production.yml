@@ -100,8 +100,8 @@ jobs:
       
       - name: Deploy Backend to Cloud Run
         run: |
-          docker tag $IMAGE_NAME:project_app_backend $IMAGE_NAME:project_app_backend:${{ github.sha }}
-          docker push $IMAGE_NAME:project_app_backend:${{ github.sha }}
+          docker tag $IMAGE_NAME:project_app_backend $IMAGE_NAME:project_app_backend-${{ github.sha }}
+          docker push $IMAGE_NAME:project_app_backend-${{ github.sha }}
           
           gcloud run deploy $BACKEND_SERVICE \
             --image=$IMAGE_NAME:project_app_backend:${{ github.sha }} \
