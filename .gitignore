@@ -29,3 +29,5 @@ LabelEncoderHeroType.pkl
 correlation_matrix_with_herotype.png
 050625_LoL_champion_data.csv.dvc
 mlruns/
+backend/__pycache__/
+.env

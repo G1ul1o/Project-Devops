@@ -4,9 +4,46 @@ import Header from "../component/header.js";
 
 export default function Predict() {
   const [showPopup, setShowPopup] = useState(false);
+  const [predictionResult, setPredictionResult] = useState(null);
+  const [formData, setFormData] = useState({
+    hp_base: "550.0",
+    mp_base: "495.0",
+    dam_base: "51.0",
+    arm_base: "21.0",
+    mr_base: "30.0",
+    range: "ranged",
+    mobility: "100.0"
+  });
 
-  const handlePredictClick = (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handlePredictClick = async (e) => {
     e.preventDefault();
+    console.log(formData)
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/predict`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          hp_base: parseFloat(formData.hp_base),
+          mp_base: parseFloat(formData.mp_base),
+          dam_base: parseFloat(formData.dam_base),
+          arm_base: parseFloat(formData.arm_base),
+          mr_base: parseFloat(formData.mr_base),
+          range: formData.range,
+          mobility: parseFloat(formData.mobility)
+        }),
+       
+      });
+    const data = await response.json();
+    setPredictionResult(data.prediction);
     setShowPopup(true);
   };
 
@@ -23,25 +60,25 @@ export default function Predict() {
 
       <form className="form" onSubmit={handlePredictClick}>
         <label className="label">HP base:</label>
-        <input className="input" type="number" name="hp-base" placeholder="Enter HP base" required min="0" />
+        <input className="input" type="number" name="hp_base" placeholder="Enter HP base" onChange={handleChange} required min="0" />
 
         <label className="label">Magic damage base:</label>
-        <input className="input" type="number" name="mp-base" placeholder="Enter MP base" required min="0" />
+        <input className="input" type="number" name="mp_base" placeholder="Enter MP base" onChange={handleChange} required min="0" />
 
         <label className="label">Physical damage base:</label>
-        <input className="input" type="number" name="attack-base" placeholder="Enter Attack base" required min="0" />
+        <input className="input" type="number" name="dam_base" placeholder="Enter Attack base" onChange={handleChange} required min="0" />
 
         <label className="label">Armor base:</label>
-        <input className="input" type="number" name="armor-base" placeholder="Enter Armor base" required min="0" />
+        <input className="input" type="number" name="arm_base" placeholder="Enter Armor base" onChange={handleChange} required min="0" />
 
         <label className="label">Magic resist base:</label>
-        <input className="input" type="number" name="magic-resist-base" placeholder="Enter Magic Resist base" required min="0" />
+        <input className="input" type="number" name="mr_base" placeholder="Enter Magic Resist base" onChange={handleChange} required min="0" />
 
         <label className="label">Range type:</label>
-        <input className="input" type="text" name="range" placeholder="Enter Range type 'melee' or 'ranged'" pattern="melee|ranged" required />
+        <input className="input" type="text" name="range" placeholder="Enter Range type 'melee' or 'ranged'" onChange={handleChange} pattern="melee|ranged" required />
 
         <label className="label">Movement speed base:</label>
-        <input className="input" type="number" name="movement-speed-base" placeholder="Enter Movement Speed base" required min="0" />
+        <input className="input" type="number" name="mobility" placeholder="Enter Movement Speed base" onChange={handleChange} required min="0" />
 
         <button type="submit" className="button">Predict</button>
       </form>
@@ -50,7 +87,7 @@ export default function Predict() {
         <div className="popup-overlay">
           <div className="popup">
             <h2>Prediction</h2>
-            <p>This is where the prediction result will appear!</p>
+           <p>Champion type predicted: <strong>{predictionResult}</strong></p>
             <button onClick={closePopup} className="close-button">Close</button>
           </div>
         </div>
