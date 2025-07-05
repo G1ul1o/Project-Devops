@@ -24,7 +24,13 @@ describe("Predict component", () => {
     expect(predictButton).toBeInTheDocument();
   });
 
-  test("shows popup when Predict button is clicked", () => {// vérifie que le popup s'affiche correctement lorsque le bouton Predict est cliqué
+  test("shows popup when Predict button is clicked", async () => {// vérifie que le popup s'affiche correctement lorsque le bouton Predict est cliqué
+     global.fetch = jest.fn(() =>
+    Promise.resolve({
+      json: () => Promise.resolve({ prediction: "some prediction" }),
+    })
+    );
+    
     render(
       <MemoryRouter>
         <Predict />
@@ -34,17 +40,26 @@ describe("Predict component", () => {
     const predictButton = screen.getByRole("button", { name: /Predict/i });
     fireEvent.click(predictButton);
 
-    const popupTitle = screen.getByRole("heading", { name: /Prediction/i, level: 2 });
+    const popupTitle = await screen.findByRole("heading", { name: /Prediction/i, level: 2 });
     expect(popupTitle).toBeInTheDocument();
 
-    expect(screen.getByText(/This is where the prediction result will appear!/i)).toBeInTheDocument();
+
 
     const closeButton = screen.getByRole("button", { name: /Close/i });
     expect(closeButton).toBeInTheDocument();
+
+    global.fetch.mockRestore();
   });
 
 
-  test("closes popup when Close button is clicked", () => {// vérifie que le popup se ferme correctement lorsque le bouton Close est cliqué
+  test("closes popup when Close button is clicked", async () => {// vérifie que le popup se ferme correctement lorsque le bouton Close est cliqué
+    
+    global.fetch = jest.fn(() =>
+    Promise.resolve({
+      json: () => Promise.resolve({ prediction: "some prediction" }),
+    })
+    );
+    
     render(
       <MemoryRouter>
         <Predict />
@@ -54,10 +69,16 @@ describe("Predict component", () => {
     const predictButton = screen.getByRole("button", { name: /Predict/i });
     fireEvent.click(predictButton);
 
+    const popupTitle = await screen.findByRole("heading", { name: /Prediction/i, level: 2 });
+    expect(popupTitle).toBeInTheDocument();
+
     const closeButton = screen.getByRole("button", { name: /Close/i });
+    expect(closeButton).toBeInTheDocument();
     fireEvent.click(closeButton);
     expect(screen.queryByRole("heading", { name: /Prediction/i, level: 2 })).not.toBeInTheDocument();
-    expect(screen.queryByText(/This is where the prediction result will appear!/i)).not.toBeInTheDocument();
+
+    global.fetch.mockRestore();
+
   });
 
 });
