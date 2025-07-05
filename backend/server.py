@@ -9,8 +9,8 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://project-frontend-720516420571.europe-west1.run.app"],  # ou ["*"] pour tout autoriser (déconseillé en prod)
-    allow_credentials=True,
+    allow_origins=["*"],  # ou ["*"] pour tout autoriser (déconseillé en prod)
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
