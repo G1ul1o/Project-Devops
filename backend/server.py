@@ -4,13 +4,12 @@ import pandas as pd
 from pydantic import BaseModel
 from sklearn.preprocessing import LabelEncoder
 from fastapi.middleware.cors import CORSMiddleware
-from loguru import logger
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # ou ["*"] pour tout autoriser (déconseillé en prod)
+    allow_origins=["*"],  # ou ["*"] pour tout autoriser (déconseillé en prod)
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -49,17 +48,17 @@ def predict(features: ChampionFeatures):
                 "mobility": features.mobility
             }])
         
-        logger.info(f"\ninput_def\n,{input_df}")
+       
 
         y_pred_encoded = model.predict(input_df)[0]
-        logger.info(f"\ny_pred_encoded\n,{y_pred_encoded}")
+        
         y_pred_label = label_encoder.inverse_transform([y_pred_encoded])[0]
-        print(y_pred_label)
+      
         return {
             "prediction_encoded": int(y_pred_encoded),
             "prediction": y_pred_label
         }
     
     except Exception as e:
-        print(e)
+   
         raise HTTPException(status_code=400, detail=str(e))
