@@ -95,6 +95,11 @@ def train_and_log_model(n_estimators, random_state,max_depth,learning_rate,subsa
         joblib.dump(model, local_model_path)
         mlflow.log_artifact(local_model_path, artifact_path="model")
 
+        local_model_path = "LabelEncoderHeroType.pkl"
+        joblib.dump(le, local_model_path)
+        mlflow.log_artifact(local_model_path, artifact_path="model")
+        
+
         print(f"✔️ Modèle loggué avec accuracy={accuracy:.4f}")
 
 train_and_log_model(n_estimators=100, random_state=42,max_depth=3,learning_rate=0.01,subsample=0.7,colsample_bytree=0.7)
