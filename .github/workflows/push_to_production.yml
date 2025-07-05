@@ -46,11 +46,13 @@ jobs:
               print(f"Latest run_id: {run_id}")
               os.makedirs("model", exist_ok=True)
               os.system(f"mlflow artifacts download --run-id {run_id} --artifact-path model/XGBClassifier.pkl --dst-path model")
+              os.system(f"mlflow artifacts download --run-id {run_id} --artifact-path model/LabelEncoderHeroType.pkl --dst-path model")
               '
 
       - name: Move model file to clean path
         run: |
             mv model/model/XGBClassifier.pkl model/XGBClassifier.pkl
+            mv model/model/LabelEncoderHeroType.pkl model/LabelEncoderHeroType.pkl
 
       - name: Verify model file exists
         run: |
