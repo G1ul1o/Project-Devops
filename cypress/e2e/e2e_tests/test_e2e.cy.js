@@ -17,8 +17,8 @@ describe('End-to-End Prediction Test', () => {
     cy.get('#predict_btn').click();
 
     // Vérifie la réponse
-    cy.get('predict_result')
+    cy.get('#predict_result')
       .should('be.visible')
-      .and('contain.text', 'Predicted herotype:')
+      .and('contain.text', 'Champion type predicted:')
   });
 });
