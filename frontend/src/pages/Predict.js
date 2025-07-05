@@ -60,34 +60,34 @@ export default function Predict() {
 
       <form className="form" onSubmit={handlePredictClick}>
         <label className="label">HP base:</label>
-        <input className="input" type="number" name="hp_base" placeholder="Enter HP base" onChange={handleChange} required min="0" />
+        <input id="hp_base" className="input" type="number" name="hp_base" placeholder="Enter HP base" onChange={handleChange} required min="0" />
 
         <label className="label">Magic damage base:</label>
-        <input className="input" type="number" name="mp_base" placeholder="Enter MP base" onChange={handleChange} required min="0" />
+        <input id="mp_base" className="input" type="number" name="mp_base" placeholder="Enter MP base" onChange={handleChange} required min="0" />
 
         <label className="label">Physical damage base:</label>
-        <input className="input" type="number" name="dam_base" placeholder="Enter Attack base" onChange={handleChange} required min="0" />
+        <input id="dam_base" className="input" type="number" name="dam_base" placeholder="Enter Attack base" onChange={handleChange} required min="0" />
 
         <label className="label">Armor base:</label>
-        <input className="input" type="number" name="arm_base" placeholder="Enter Armor base" onChange={handleChange} required min="0" />
+        <input id="arm_base" className="input" type="number" name="arm_base" placeholder="Enter Armor base" onChange={handleChange} required min="0" />
 
         <label className="label">Magic resist base:</label>
-        <input className="input" type="number" name="mr_base" placeholder="Enter Magic Resist base" onChange={handleChange} required min="0" />
+        <input id="mr_base" className="input" type="number" name="mr_base" placeholder="Enter Magic Resist base" onChange={handleChange} required min="0" />
 
         <label className="label">Range type:</label>
-        <input className="input" type="text" name="range" placeholder="Enter Range type 'melee' or 'ranged'" onChange={handleChange} pattern="melee|ranged" required />
+        <input id="range" className="input" type="text" name="range" placeholder="Enter Range type 'melee' or 'ranged'" onChange={handleChange} pattern="melee|ranged" required />
 
         <label className="label">Movement speed base:</label>
-        <input className="input" type="number" name="mobility" placeholder="Enter Movement Speed base" onChange={handleChange} required min="0" />
+        <input id="mobility" className="input" type="number" name="mobility" placeholder="Enter Movement Speed base" onChange={handleChange} required min="0" />
 
-        <button type="submit" className="button">Predict</button>
+        <button id="predict_btn" type="submit" className="button">Predict</button>
       </form>
 
       {showPopup && (
         <div className="popup-overlay">
           <div className="popup">
             <h2>Prediction</h2>
-           <p>Champion type predicted: <strong>{predictionResult}</strong></p>
+           <p id="predict_result">Champion type predicted: <strong>{predictionResult}</strong></p>
             <button onClick={closePopup} className="close-button">Close</button>
           </div>
         </div>

@@ -7,7 +7,7 @@ function Header() {
       <div className="logo">Project Devops</div>
       <nav className="nav">
         <Link to="/" className="nav-link">Home</Link>
-        <Link to="/Predict" className="nav-link">Prediction</Link>
+        <Link to="/Predict" className="nav-link" id="pred">Prediction</Link>
       </nav>
     </header>
   );
