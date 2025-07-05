@@ -90,7 +90,7 @@ jobs:
       - name: Start frontend in background (dev mode)
         run: |
           cd frontend
-          nohup npm start
+          nohup npm run build
         shell: bash
 
       - name: Wait for frontend to be ready
