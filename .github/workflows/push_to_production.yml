@@ -71,8 +71,8 @@ jobs:
       
       - name: Build Docker images
         run: |
-          docker build -t $IMAGE_NAME:project_app_frontend ./frontend --build-arg REACT_APP_API_URL="https://$BACKEND_SERVICE-$GCP_REGION.a.run.app"
-          docker build -t $IMAGE_NAME:project_app_backend -f ./backend/Dockerfile .
+          docker build --no-cache -t $IMAGE_NAME:project_app_frontend ./frontend --build-arg REACT_APP_API_URL="https://$BACKEND_SERVICE-$GCP_REGION.a.run.app"
+          docker build --no-cache -t $IMAGE_NAME:project_app_backend -f ./backend/Dockerfile .
 
       - name: Push Docker images to Docker Hub
         run: |
